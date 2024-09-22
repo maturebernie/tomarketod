@@ -45,6 +45,9 @@ class Tomartod:
         if proxy is not None:
             self.ses.proxies.update({"http": proxy, "https": proxy})
 
+    def set_user_agent(self, agent):
+        self.headers["user-agent"] = agent
+
     def set_authorization(self, auth):
         self.headers["authorization"] = auth
 
@@ -185,6 +188,12 @@ class Tomartod:
             self.log(f"{kuning}end farming at : {putih}{format_end_farming}")
             if self.play_game:
                 self.log(f"{hijau}auto play game is enable !")
+                # Generate a random probability
+                if random.random() < 0.15:  # 50% chance
+                    self.log(f"play game is skipped")
+                    continue  # Skip this account
+                self.interval = random.randint(60, 120)
+                self.countdown(self.interval)
                 play_pass = data.get("play_passes")
                 self.log(f"{hijau}game ticket : {putih}{play_pass}")
                 if int(play_pass) > 0:
@@ -298,14 +307,23 @@ class Tomartod:
         self.log(f"{biru}total proxies detected : {putih}{len(proxies)}")
         use_proxy = True if len(proxies) > 0 else False
         self.log(f"{hijau}use proxy : {putih}{use_proxy}")
+        # NEW: Read user agents from agents.txt
+        user_agents = open('agents.txt').read().splitlines()
+        self.log(f"{biru}total user agents detected : {putih}{len(user_agents)}")
+
         print(line)
         while True:
             list_countdown = []
             _start = int(time.time())
+
+            # Shuffle the order of datas
+            random.shuffle(datas)
+
             for no, data in enumerate(datas):
                 if use_proxy:
                     proxy = proxies[no % len(proxies)]
                 self.set_proxy(proxy if use_proxy else None)
+                self.set_user_agent(user_agents[no % len(user_agents)])
                 parser = self.marinkitagawa(data)
                 user = json.loads(parser["user"])
                 id = user["id"]
@@ -313,6 +331,10 @@ class Tomartod:
                     f"{hijau}account number : {putih}{no+1}{hijau}/{putih}{len(datas)}"
                 )
                 self.log(f"{hijau}name : {putih}{user['first_name']}")
+                # Generate a random probability
+                if random.random() < 0.25:  # 25% chance
+                    self.log(f"{hijau}name : {putih}{user['first_name']} this round is skipped")
+                    continue  # Skip this account
                 token = self.get(id)
                 if token is None:
                     token = self.login(data)
@@ -328,11 +350,17 @@ class Tomartod:
                 self.set_authorization(token)
                 result = self.get_balance()
                 print(line)
+                self.interval = random.randint(30, 300)
                 self.countdown(self.interval)
                 list_countdown.append(result)
+                self.log(f"{hijau}name : {putih}{user['first_name']} this round is picked and has finished execution")
             _end = int(time.time())
             _tot = _end - _start
-            _min = min(list_countdown) - _tot
+            # Check if list_countdown is empty
+            if list_countdown:
+                _min = min(list_countdown) - _tot
+            else:
+                _min = 10800  # Set _min to 3 hours in seconds
             self.countdown(_min)
 
 
