@@ -8,5 +8,6 @@ __pycache__
 *.txt
 !requirements.txt
 *.log
-!proxies.txt
-!data.txt
+proxies.txt
+data.txt
+agents.txt
