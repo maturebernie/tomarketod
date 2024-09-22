@@ -186,12 +186,9 @@ class Tomartod:
 
             self.log(f"{kuning}not time to claim !")
             self.log(f"{kuning}end farming at : {putih}{format_end_farming}")
-            if self.play_game:
+            if self.play_game and random.random() >= 0.85:
                 self.log(f"{hijau}auto play game is enable !")
                 # Generate a random probability
-                if random.random() < 0.85:  # 50% chance
-                    self.log(f"play game is skipped")
-                    continue  # Skip this account
                 self.interval = random.randint(60, 120)
                 self.countdown(self.interval)
                 play_pass = data.get("play_passes")
@@ -200,7 +197,6 @@ class Tomartod:
                     # self.play_game_func(play_pass)
                     # 每次就玩1次就好了
                     self.play_game_func(1)
-                    continue
 
             _next = end_farming - timestamp
             return _next + random.randint(self.add_time_min, self.add_time_max)
