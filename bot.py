@@ -197,6 +197,7 @@ class Tomartod:
                     # self.play_game_func(play_pass)
                     # 每次就玩1次就好了
                     self.play_game_func(1)
+                    continue
 
             _next = end_farming - timestamp
             return _next + random.randint(self.add_time_min, self.add_time_max)
