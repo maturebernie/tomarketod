@@ -357,12 +357,12 @@ class Tomartod:
             _end = int(time.time())
             _tot = _end - _start
             # Check if list_countdown is empty
-            if list_countdown:
-                _min = min(list_countdown) - _tot
-            else:
-                _min = 10800  # Set _min to 3 hours in seconds
+            # if list_countdown:
+            #     _min = min(list_countdown) - _tot
+            # else:
+            #     _min = 10800  # Set _min to 3 hours in seconds
             # 这个等待有问题
-            _min = 10800
+            _min = random.randint(10800, 10830)
             self.countdown(_min)
 
 
