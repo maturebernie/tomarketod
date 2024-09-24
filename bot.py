@@ -266,6 +266,7 @@ class Tomartod:
                 continue
 
     def countdown(self, t):
+        print(f"need to wait {t}(secs)")
         for i in range(t, 0, -1):
             menit, detik = divmod(i, 60)
             jam, menit = divmod(menit, 60)
@@ -360,6 +361,8 @@ class Tomartod:
                 _min = min(list_countdown) - _tot
             else:
                 _min = 10800  # Set _min to 3 hours in seconds
+            # 这个等待有问题
+            _min = 10800
             self.countdown(_min)
 
 
