@@ -363,7 +363,7 @@ class Tomartod:
             # else:
             #     _min = 10800  # Set _min to 3 hours in seconds
             # 这个等待有问题，我设置了3个小时的，但是实际执行的时候，其实是12个小时
-            _min = random.randint(10800/4, 10830/4)
+            _min = random.randint(10800/4, 10848/4)
             self.countdown(_min)
 
 
