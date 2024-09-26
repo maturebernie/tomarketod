@@ -317,10 +317,11 @@ class Tomartod:
             list_countdown = []
             _start = int(time.time())
 
+            indexed_datas = list(enumerate(datas))
             # Shuffle the order of datas
-            random.shuffle(datas)
+            random.shuffle(indexed_datas)
 
-            for no, data in enumerate(datas):
+            for no, data in indexed_datas:
                 if use_proxy:
                     proxy = proxies[no % len(proxies)]
                 self.set_proxy(proxy if use_proxy else None)
