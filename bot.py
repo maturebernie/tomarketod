@@ -85,10 +85,10 @@ class Tomartod:
             return False
 
         data = res.json().get("data")
-        end_farming = data["end_at"]
-        format_end_farming = (
-            datetime.fromtimestamp(end_farming).isoformat(" ").split(".")[0]
-        )
+        # end_farming = data["end_at"]
+        # format_end_farming = (
+        #     datetime.fromtimestamp(end_farming).isoformat(" ").split(".")[0]
+        # )
         self.log(f"{hijau}success start farming !")
 
     def end_farming(self):
